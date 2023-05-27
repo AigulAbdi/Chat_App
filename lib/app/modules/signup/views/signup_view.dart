@@ -1,10 +1,12 @@
+import 'dart:developer';
+
 import 'package:chat_app/app/components/text_field.dart';
 import 'package:chat_app/app/constants/colors/app_colors.dart';
 import 'package:chat_app/app/constants/text_style/app_text_styles.dart';
+
 import 'package:chat_app/app/modules/login/views/login_view.dart';
 import 'package:chat_app/widgets/register_widget.dart';
 import 'package:flutter/material.dart';
-
 import 'package:get/get.dart';
 
 import '../controllers/signup_controller.dart';
@@ -12,7 +14,7 @@ import '../controllers/signup_controller.dart';
 class SignupView extends GetView<SignupController> {
   SignupView({Key? key}) : super(key: key);
 
-  final _controller = Get.put<SignupController>(SignupController());
+  SignupController _controller = Get.put<SignupController>(SignupController());
   @override
   Widget build(BuildContext context) {
     return Material(
@@ -82,10 +84,11 @@ class SignupView extends GetView<SignupController> {
                         onTap: () {
                           if (_controller.name.value.isNotEmpty &&
                               _controller.email.value.isNotEmpty &&
-                              _controller.password.value.isNotEmpty) {
+                              _controller.password.value.isNotEmpty)
                             _controller.signUp();
-                          }
-                          // Get.to(() => const ChatView());
+                          log('sign up ==>${_controller.signUp()} ');
+
+                          //  Get.to(() => const ChatView());
                           // FocusManager.instance.primaryFocus?.unfocus();
                         },
                         horizontal: 125,
@@ -103,7 +106,7 @@ class SignupView extends GetView<SignupController> {
                           style: AppTextStyle.black15wnormal,
                         ),
                         InkWell(
-                          onTap: () => Get.to(() => const LoginView()),
+                          onTap: () => Get.to(() => LoginView()),
                           child: const Text(
                             'Login',
                             style: AppTextStyle.blue15wbold,

@@ -27,7 +27,7 @@ class HomeView extends GetView<HomeController> {
               height: 100,
             ),
             RegisterWidget(
-              onTap: () => Get.to(const LoginView()),
+              onTap: () => Get.to(LoginView()),
               horizontal: 140,
               vertical: 14,
               title: 'LOGIN',

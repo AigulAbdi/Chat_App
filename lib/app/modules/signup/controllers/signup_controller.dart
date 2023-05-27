@@ -1,6 +1,7 @@
 import 'dart:developer';
 
-import 'package:chat_app/app/modules/home/views/home_view.dart';
+import 'package:chat_app/app/modules/chat/views/chat_view.dart';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
@@ -13,8 +14,7 @@ class SignupController extends GetxController {
   CollectionReference user = FirebaseFirestore.instance.collection('users');
   Future<void> addUser() {
     return user
-        .doc('AA11')
-        .set({
+        .add({
           'name': name.value,
           'email': email.value,
           'password': password.value,
@@ -30,36 +30,25 @@ class SignupController extends GetxController {
             email: email.value,
             password: password.value,
           )
-          .then((value) => {
-                addUser(),
-              })
-          .then((value) => {addUser(), Get.to(() => const HomeView())});
+          .then(
+            (value) => {
+              addUser(),
+              Get.to(
+                () => ChatView(),
+              ),
+            },
+          );
     } on FirebaseAuthException catch (e) {
       if (e.code == 'weak-password') {
-        print('The password provided is too weak.');
+        Get.defaultDialog(
+            title: 'The password provided is too weak.', onCancel: Get.back);
       } else if (e.code == 'email-already-in-use') {
-        print('The account already exists for that email.');
+        Get.defaultDialog(
+            title: 'The account already exists for that email.',
+            onCancel: Get.back);
       }
     } catch (e) {
-      print(e);
+      log("e===>$e");
     }
   }
-
-  final count = 0.obs;
-  @override
-  void onInit() {
-    super.onInit();
-  }
-
-  @override
-  void onReady() {
-    super.onReady();
-  }
-
-  @override
-  void onClose() {
-    super.onClose();
-  }
-
-  void increment() => count.value++;
 }

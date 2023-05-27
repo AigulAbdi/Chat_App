@@ -16,7 +16,7 @@ class TextFieldWidget extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.only(left: 40.0, right: 40.0),
       child: TextField(
-        onChanged: (value) {},
+        onChanged: onChanged,
         decoration: InputDecoration(
           prefixIcon: icon,
           labelText: labelText,

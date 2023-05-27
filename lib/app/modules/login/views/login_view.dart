@@ -1,6 +1,7 @@
 import 'package:chat_app/app/components/text_field.dart';
 import 'package:chat_app/app/constants/colors/app_colors.dart';
 import 'package:chat_app/app/constants/text_style/app_text_styles.dart';
+import 'package:chat_app/app/modules/chat/views/chat_view.dart';
 import 'package:chat_app/app/modules/signup/views/signup_view.dart';
 import 'package:chat_app/widgets/register_widget.dart';
 import 'package:flutter/material.dart';
@@ -10,7 +11,9 @@ import 'package:get/get.dart';
 import '../controllers/login_controller.dart';
 
 class LoginView extends GetView<LoginController> {
-  const LoginView({Key? key}) : super(key: key);
+  LoginView({Key? key}) : super(key: key);
+  final _loginController = Get.put(LoginController());
+
   @override
   Widget build(BuildContext context) {
     return Material(
@@ -41,14 +44,18 @@ class LoginView extends GetView<LoginController> {
                     height: 100,
                   ),
                   TextFieldWidget(
-                      onChanged: (p0) {},
+                      onChanged: (value) {
+                        _loginController.email.value = value;
+                      },
                       icon: const Icon(Icons.mail),
                       labelText: 'Email adress'),
                   const SizedBox(
                     height: 30,
                   ),
                   TextFieldWidget(
-                      onChanged: (p0) {},
+                      onChanged: (value) {
+                        _loginController.password.value = value;
+                      },
                       icon: const Icon(Icons.lock),
                       labelText: ' Password'),
                   const SizedBox(
@@ -74,6 +81,12 @@ class LoginView extends GetView<LoginController> {
                     height: 30,
                   ),
                   RegisterWidget(
+                      onTap: () {
+                        if (_loginController.email.value.isNotEmpty &&
+                            _loginController.password.value.isNotEmpty)
+                          _loginController.logIn();
+                        Get.to(() => ChatView());
+                      },
                       horizontal: 135,
                       vertical: 14,
                       title: 'Login',

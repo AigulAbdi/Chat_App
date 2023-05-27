@@ -9,13 +9,13 @@ class RegisterWidget extends StatelessWidget {
     required this.title,
     required this.containerColor,
     super.key,
-    this.onTap,
+    required this.onTap,
   });
   final String title;
   double horizontal;
   double vertical;
   final Color? containerColor;
-  final Function()? onTap;
+  final void Function()? onTap;
 
   @override
   Widget build(BuildContext context) {
